@@ -1,0 +1,40 @@
+ion-label.timer-text {
+	font-size: 120px !important;
+	/*color:  red;*/
+}
+
+/*
+ion-button.interval-button {
+	--background: lightgrey;
+	--border-radius: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	color: black;
+}
+
+ion-button.interval-button.active {
+	--background:  #3880ff;
+	color: white;
+}*/
+
+
+ion-button.interval-btn {
+	--background: lightgrey;
+	--border-radius: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	color: black;
+}
+
+ion-button.interval-btn.active {
+	--background:  #3880ff;
+	color: white;
+}
+
+ion-row {
+	border:  1px solid red;
+}
+
+ion-col {
+	border:  1px solid green;
+}

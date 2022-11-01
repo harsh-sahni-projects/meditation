@@ -30,7 +30,11 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
+          
+          {/*The menu element should be a sibling to the root content element.
+             There can be any number of menus attached to the content. */}
           <Menu />
+
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
               <Redirect to="/page/Inbox" />
@@ -39,6 +43,7 @@ const App: React.FC = () => {
               <Page />
             </Route>
           </IonRouterOutlet>
+
         </IonSplitPane>
       </IonReactRouter>
     </IonApp>

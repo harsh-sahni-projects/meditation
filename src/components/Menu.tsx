@@ -1,11 +1,14 @@
 import {
+  IonMenu,
   IonContent,
+  IonList,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
   IonIcon,
   IonItem,
   IonLabel,
-  IonList,
   IonListHeader,
-  IonMenu,
   IonMenuToggle,
   IonNote,
 } from '@ionic/react';
@@ -68,7 +71,17 @@ const Menu: React.FC = () => {
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
-        <IonList id="inbox-list">
+
+        <IonList>
+          <IonListHeader>Meditation</IonListHeader>
+          <IonMenuToggle>
+            <IonItem>
+              <IonLabel>Home</IonLabel>
+            </IonItem>
+          </IonMenuToggle>
+        </IonList>
+
+        {/*<IonList id="inbox-list">
           <IonListHeader>Inbox</IonListHeader>
           <IonNote>hi@ionicframework.com</IonNote>
           {appPages.map((appPage, index) => {
@@ -91,7 +104,8 @@ const Menu: React.FC = () => {
               <IonLabel>{label}</IonLabel>
             </IonItem>
           ))}
-        </IonList>
+        </IonList>*/}
+
       </IonContent>
     </IonMenu>
   );
