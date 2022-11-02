@@ -4,12 +4,13 @@ import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton,
          IonGrid, IonRow, IonCol,
          IonSegment, IonSegmentButton,
          IonInput, IonButton,
-         useIonPicker, IonIcon } from '@ionic/react';
+         useIonPicker, IonIcon,
+         IonList, IonSelect, IonSelectOption } from '@ionic/react';
 import { caretDownOutline } from 'ionicons/icons'
 // import { useParams } from 'react-router';
 // import ExploreContainer from '../components/ExploreContainer';
 import './Page.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const Page: React.FC = () => {
 
@@ -20,19 +21,15 @@ const Page: React.FC = () => {
   const [ selectedTime, setSelectedTime ] = useState(1);
   const [ activeButton, setButtonActive ] = useState('every');
   const [ activeTimeUnit, setTimeUnit ] = useState('sec');
+  const [ tone, setTone ] = useState('surprise');
 
-    
   const [ present ] = useIonPicker();
   const options: Array<object> = [];
 
   for (let i=1; i<=60; i++) {
-    let obj = {
-      text: i,
-      value: i
-    }
+    let obj = { text: i, value: i }
     options.push(obj);
   }
-  // alert(JSON.stringify(options))
 
   const openPicker = async() => {
     present({
@@ -57,11 +54,6 @@ const Page: React.FC = () => {
     })
   }
 
-  // useEffect(() => {
-  //   alert(selectedTime);
-  // }, [selectedTime])
-
-
   const normalizeTime = (num: number) => {
     return (num < 10) ? '0'+num : num;
   }
@@ -80,28 +72,35 @@ const Page: React.FC = () => {
 
       <IonContent fullscreen>
 
-        <IonItem lines="none">
+        <IonItem lines="none" className="mt-3 md-3">
           <IonLabel class="ion-text-center timer-text ion-margin">
             <div>{normalizeTime(min)}:{normalizeTime(sec)}</div>
           </IonLabel>
         </IonItem>
 
-        <IonItem lines="none">
-          <IonLabel>Notification interval:</IonLabel>
-        </IonItem>
-
-        <IonItem lines="none">
+        <IonItem lines="none" className="md-3">
           <IonGrid>
+            <IonRow>
+              <IonCol>
+                <div>Notification interval:</div>
+              </IonCol>
+            </IonRow>
+
+
             <IonRow>
               <IonCol size="auto">
                 <div>
-                  <IonButton className={"interval-btn" + ((activeButton=="every") ? " active" : "")} onClick={e => setButtonActive("every")}>Every</IonButton>
-                  <IonButton className={"interval-btn" + ((activeButton=="after") ? " active" : "")} onClick={e => setButtonActive("after")}>After</IonButton>
+                  <IonButton
+                    className={"interval-btn" + ((activeButton=="every") ? " active" : "")}
+                    onClick={e => setButtonActive("every")}>Every</IonButton>
+                  <IonButton
+                    className={"interval-btn" + ((activeButton=="after") ? " active" : "")}
+                    onClick={e => setButtonActive("after")}>After</IonButton>
                 </div>
               </IonCol>
 
-              <IonCol> 
-                <div style={{width: "150px", border: "0px solid red"}}>
+              <IonCol size="auto"> 
+                <div style={{ border: "0px solid red"}}>
                   <IonButton expand="full" onClick={openPicker}>
                     {selectedTime} <IonIcon slot="end" icon={caretDownOutline}></IonIcon>
                   </IonButton>
@@ -111,14 +110,52 @@ const Page: React.FC = () => {
                 </IonItem>*/}
               </IonCol>
               
-              <IonCol>
+              <IonCol size="auto">
                 <div>
-                  <IonButton className={"interval-btn" + ((activeTimeUnit=="sec") ? " active" : "")} onClick={e => setTimeUnit("sec")}>Sec</IonButton>
-                  <IonButton className={"interval-btn" + ((activeTimeUnit=="min") ? " active" : "")} onClick={e => setTimeUnit("min")}>Min</IonButton>
-                  <IonButton className={"interval-btn" + ((activeTimeUnit=="hr") ? " active" : "")} onClick={e => setTimeUnit("hr")}>Hr</IonButton>
+                  <IonButton
+                    className={"interval-btn" + ((activeTimeUnit=="sec") ? " active" : "")}
+                    onClick={e => setTimeUnit("sec")}>Sec</IonButton>
+                  <IonButton
+                    className={"interval-btn" + ((activeTimeUnit=="min") ? " active" : "")}
+                    onClick={e => setTimeUnit("min")}>Min</IonButton>
+                  <IonButton
+                    className={"interval-btn" + ((activeTimeUnit=="hr") ? " active" : "")}
+                    onClick={e => setTimeUnit("hr")}>Hr</IonButton>
                 </div>
               </IonCol>
-            
+            </IonRow>
+
+            <IonRow className="info">
+              <IonCol>
+                <div>As per your selection, a sound will play <strong>{activeButton == 'every' ? 'after every' : 'only once after'} {selectedTime} {activeTimeUnit}.</strong></div>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+        </IonItem>
+
+        <IonItem lines="none" className="brd-">
+          <IonGrid className="brg-">
+            <IonRow className="brd-">
+              <IonCol size="4" className="brg-" style={{margin: "auto", width:"10%"}}>
+                <span>Select sound:</span>
+              </IonCol>
+              <IonCol size="8" className="brg-">
+                <IonList className="brg- tone-select-list">
+                  <IonItem lines="none" className="brd-">
+                    <IonSelect interface="popover"
+                               placeholder="Select sound"
+                               value={tone}
+                               className="brg-"
+                               onIonChange={(e) => setTone(e.detail.value)}>
+                      <IonSelectOption value="surprise">Surprise</IonSelectOption>
+                      <IonSelectOption value="twinkle">Twinkle</IonSelectOption>
+                      <IonSelectOption value="inbound">Inbound</IonSelectOption>
+                      <IonSelectOption value="cozy">Cozy</IonSelectOption>
+                      <IonSelectOption value="ding">Ding</IonSelectOption>
+                    </IonSelect>
+                  </IonItem>
+                </IonList>
+              </IonCol>
             </IonRow>
           </IonGrid>
         </IonItem>

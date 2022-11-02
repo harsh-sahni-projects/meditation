@@ -19,11 +19,15 @@ ion-button.interval-button.active {
 
 
 ion-button.interval-btn {
-	--background: lightgrey;
+	--background: #ddd;
 	--border-radius: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
 	color: black;
+}
+
+ion-content * {
+	/*font-size: 12px;*/
 }
 
 ion-button.interval-btn.active {
@@ -32,9 +36,45 @@ ion-button.interval-btn.active {
 }
 
 ion-row {
-	border:  1px solid red;
+	/*border:  1px solid red;*/
 }
 
 ion-col {
+	/*border:  1px solid green;*/
+}
+
+.info {
+	color: #aaa;
+	font-size: 12px;
+}
+
+.mt-3 {
+	margin-top: 3rem;
+}
+.md-3 {
+	margin-bottom: 3rem;
+}
+
+
+
+.brd {
+	border:  1px solid red;
+}
+
+.brg {
 	border:  1px solid green;
+}
+
+.tone-select-list {
+	padding: 0px;
+}
+
+.tone-select-list ion-select {
+	padding: 0px;
+	width: 100%;
+}
+
+.tone-select-list ion-item {
+	--min-height: 27px;
+	--background: #ddd;
 }
