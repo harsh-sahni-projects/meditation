@@ -22,15 +22,18 @@ const Page: React.FC = () => {
   const [ activeButton, setButtonActive ] = useState('every');
   const [ activeTimeUnit, setTimeUnit ] = useState('sec');
   const [ tone, setTone ] = useState('surprise');
+  const [ timerState, setTimerState ] = useState('stopped'); // stopped or running
+
+  const toggleTimerState = (e: any) => {
+    console.log(e)
+    const currentState = e.target['data-value'];
+    const newState = currentState == 'stopped' ? 'running' : 'stopped';
+    setTimerState(newState);
+  }
 
   const [ present ] = useIonPicker();
   const options: Array<object> = [];
-
-  for (let i=1; i<=60; i++) {
-    let obj = { text: i, value: i }
-    options.push(obj);
-  }
-
+  for (let i=1; i<=60; i++) options.push({ text: i, value: i });
   const openPicker = async() => {
     present({
       columns: [
@@ -133,7 +136,7 @@ const Page: React.FC = () => {
           </IonGrid>
         </IonItem>
 
-        <IonItem lines="none" className="brd-">
+        <IonItem lines="none" className="md-5 brd-">
           <IonGrid className="brg-">
             <IonRow className="brd-">
               <IonCol size="4" className="brg-" style={{margin: "auto", width:"10%"}}>
@@ -158,6 +161,14 @@ const Page: React.FC = () => {
               </IonCol>
             </IonRow>
           </IonGrid>
+        </IonItem>
+
+        <IonItem lines="none" className="md-5">
+          <IonButton className="start-stop-btn"
+                     onClick={e => toggleTimerState(e)}
+                     data-value={timerState}>
+            {(timerState == 'stopped') ? "Start" : "Stop"}
+          </IonButton>
         </IonItem>
 
         {/*<IonHeader collapse="condense">
