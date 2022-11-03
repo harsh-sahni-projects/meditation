@@ -10,7 +10,7 @@ import { caretDownOutline } from 'ionicons/icons'
 // import { useParams } from 'react-router';
 // import ExploreContainer from '../components/ExploreContainer';
 import './Page.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Page: React.FC = () => {
 
@@ -24,12 +24,38 @@ const Page: React.FC = () => {
   const [ tone, setTone ] = useState('surprise');
   const [ timerState, setTimerState ] = useState('stopped'); // stopped or running
 
+  let currentSec: number = 0;
+  const incrementTimer = () => {
+    currentSec++;
+    console.log({currentSec, timerState})
+    if ((timerState === 'running') && (currentSec < 10)) {
+      setTimeout(incrementTimer, 1000);
+    }
+  }
   const toggleTimerState = (e: any) => {
-    console.log(e)
     const currentState = e.target['data-value'];
     const newState = currentState == 'stopped' ? 'running' : 'stopped';
+    console.log('Setting New state:', newState)
     setTimerState(newState);
+    console.log('After setting timer value:', timerState);
+
+    setTimeout(() => {
+      console.log('Toggle')
+      incrementTimer();
+    }, 1000);
   }
+
+
+
+  useEffect(() => {
+    const sec = normalizeTime(currentSec % 60);
+    const min = normalizeTime(Math.floor(currentSec / 60) % 60);
+    const hr =  normalizeTime(Math.floor(currentSec / 3600));
+    console.log({sec, min, hr}) 
+
+  }, [currentSec])
+
+
 
   const [ present ] = useIonPicker();
   const options: Array<object> = [];
