@@ -24,38 +24,34 @@ const Page: React.FC = () => {
   const [ tone, setTone ] = useState('surprise');
   const [ timerState, setTimerState ] = useState('stopped'); // stopped or running
 
-  let currentSec: number = 0;
-  const incrementTimer = () => {
-    currentSec++;
-    console.log({currentSec, timerState})
-    if ((timerState === 'running') && (currentSec < 10)) {
-      setTimeout(incrementTimer, 1000);
-    }
-  }
+  const [ currentSec, setCurrentSec ] = useState(0);
   const toggleTimerState = (e: any) => {
     const currentState = e.target['data-value'];
     const newState = currentState == 'stopped' ? 'running' : 'stopped';
     console.log('Setting New state:', newState)
     setTimerState(newState);
-    console.log('After setting timer value:', timerState);
-
-    setTimeout(() => {
-      console.log('Toggle')
-      incrementTimer();
-    }, 1000);
   }
 
-
+  const incrementTimer = async () => {
+    await new Promise<void>((resolve, reject) => { setTimeout(()=>{resolve()}, 1000) });
+    if (timerState == 'running') {
+      setCurrentSec(currentSec+1);  
+    } else {
+      console.log('Stopped')
+    }
+  }
 
   useEffect(() => {
-    const sec = normalizeTime(currentSec % 60);
-    const min = normalizeTime(Math.floor(currentSec / 60) % 60);
-    const hr =  normalizeTime(Math.floor(currentSec / 3600));
-    console.log({sec, min, hr}) 
+    console.log('Use Effect - timer state:', timerState, currentSec);
 
-  }, [currentSec])
+    const sec = currentSec % 60;
+    const min = Math.floor(currentSec / 60) % 60;
+    const hr = Math.floor(currentSec / 3600);
+    setSec(sec);
+    setMin(min);
 
-
+    incrementTimer();
+  }, [timerState, currentSec])
 
   const [ present ] = useIonPicker();
   const options: Array<object> = [];
